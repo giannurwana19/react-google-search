@@ -8,10 +8,16 @@ export default function Results() {
   const location = useLocation();
 
   useEffect(() => {
-    getResults('/search/q=Laptop asus terbaru&num=40');
+    if (searchTerm) {
+      if (location.pathname === '/videos') {
+        getResults(`/search/q=${searchTerm} videos`);
+      } else {
+        getResults(`${location.pathname}/q=${searchTerm}&num=40`);
+      }
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [searchTerm, location.pathname]);
 
   if (isLoading) return <Loading />;
 
@@ -34,7 +40,23 @@ export default function Results() {
         </div>
       );
     case '/images':
-      return 'SEARCH';
+      return (
+        <div className="flex flex-wrap justify-center items-center">
+          {results?.image_results?.map(
+            ({ image, link: { href, title } }, index) => (
+              <a
+                href={href}
+                key={index}
+                className="sm:p-3 p-5"
+                target="_blank"
+                rel="noreferrer">
+                <img src={image?.src} alt={title} loading="lazy" />
+                <p className="w-36 break-words text-sm mt-2">{title}</p>
+              </a>
+            )
+          )}
+        </div>
+      );
     case '/news':
       return 'SEARCH';
     case '/videos':
