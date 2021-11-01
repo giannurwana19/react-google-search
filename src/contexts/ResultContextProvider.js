@@ -6,7 +6,7 @@ const baseUrl = 'https://google-search3.p.rapidapi.com/api/v1';
 export default function ResultContextProvider({ children }) {
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('Covid-19 Indonesia');
+  const [searchTerm, setSearchTerm] = useState('Programming Tutorial');
 
   const getResults = async type => {
     setIsLoading(true);
